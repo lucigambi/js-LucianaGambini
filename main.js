@@ -1,132 +1,213 @@
+const app = document.getElementById("app");
+let puntaje = 0;
+let tematicaActual = null;
+let IndicePreguntaActual = 0;
+
+
 const preguntasPinipedos = [
     {
-        titulo: "🦭🦭🦭PINÍPEDOS🦭🦭🦭                         Pregunta 1de3🔵⚪⚪",
+        titulo: "🦭🦭PINÍPEDOS🦭🦭\nPregunta 1de3🔵⚪⚪",
         pregunta: "¿Cuál es el pinípedo más grande?",
-        opciones: ["1-Foca Leopardo", "2-Elefante Marino", "3-Morsa"],
-        respuestaCorrecta: 3
+        opciones: ["Foca Leopardo", "Elefante Marino", "Morsa"],
+        respuestaCorrecta: 1
     },
     {
-        titulo: "🦭🦭🦭PINÍPEDOS🦭🦭🦭                         Pregunta 2de3🔵🔵⚪",
+        titulo: "🦭🦭PINÍPEDOS🦭🦭\nPregunta 2de3🔵🔵⚪",
         pregunta: "¿Cuál es el pinípedo más veloz?",
-        opciones: ["1-Foca Leopardo", "2-León Marino", "3-Foca Cangrejera"],
-        respuestaCorrecta: 1
+        opciones: ["Foca Leopardo", "León Marino", "Foca Cangrejera"],
+        respuestaCorrecta: 0
     },
     {
-        titulo: "🦭🦭🦭PINÍPEDOS🦭🦭🦭                         Pregunta 3de3🔵🔵🔵",
+        titulo: "🦭🦭PINÍPEDOS🦭🦭\nPregunta 3de3🔵🔵🔵",
         pregunta: "¿Cuál es el pinípedo más numeroso de la Patagonia?",
-        opciones: ["1-León Marino", "2-Elefante Marino", "3-Morsa"],
-        respuestaCorrecta: 1
+        opciones: ["León Marino", "Elefante Marino", "Morsa"],
+        respuestaCorrecta: 0
     }
 ];
+
 
 const preguntasCetaceos = [
     {
-        titulo: "🐳🐳🐳CETÁCEOS🐬🐬🐬                          Pregunta 1de3🔵⚪⚪",
+        titulo: "🐳🐳CETÁCEOS🐬🐬\nPregunta 1de3🔵⚪⚪",
         pregunta: "¿CUÁL DE ESTOS CETÁCEOS NO ES UN DELFÍN?",
-        opciones: ["1-Orca", "2-Cachalote", "3-Beluga"],
+        opciones: ["Orca", "Cachalote", "Beluga"],
+        respuestaCorrecta: 1
+    },
+    {
+        titulo: "🐳🐳CETÁCEOS🐬🐬\nPregunta 2de3🔵🔵⚪",
+        pregunta: "¿Cuál es la ballena más grande?",
+        opciones: ["Ballena Jorobada", "Ballena Gris", "Ballena Azul"],
         respuestaCorrecta: 2
     },
     {
-        titulo: "🐳🐳🐳CETÁCEOS🐬🐬🐬                          Pregunta 2de3🔵🔵⚪",
-        pregunta: "¿Cuál es la ballena más grande?",
-        opciones: ["1-Ballena Jorobada", "2-Ballena Gris", "3-Ballena Azul"],
-        respuestaCorrecta: 3
-    },
-    {
-        titulo: "🐳🐳🐳CETÁCEOS🐬🐬🐬                          Pregunta 3de3🔵🔵🔵",
+        titulo: "🐳🐳CETÁCEOS🐬🐬\nPregunta 3de3🔵🔵🔵",
         pregunta: "¿Cuáles son los cetáceos más inteligentes?",
-        opciones: ["1-Delfines", "2-Ballenas", "3-Cachalotes"],
-        respuestaCorrecta: 1
+        opciones: ["Delfines", "Ballenas", "Cachalotes"],
+        respuestaCorrecta: 0
     }
 ];
 
-let puntaje = 0;
+
+const tematicas = {
+    pinipedos: preguntasPinipedos,
+    cetaceos: preguntasCetaceos
+};
 
 
-function mostrarPregunta(pregunta) {
-    let opciones = pregunta.opciones.join("\n");
-    let respuestaUsuario = prompt(pregunta.titulo + "\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n" + pregunta.pregunta + "\n (⚠️ Ingresa solo el número de la opción )\n" + opciones);
+const elegirTematica = () => {
+    app.innerHTML = `
+    <h1>TRIVIA</h1>    
+    <h2>Elige una temática</h2>
+        <div id="tematica-select">
+            <button id="button-pinipedos">🦭 Pinípedos</button>
+            <button id="button-cetaceos">🐬 Cetáceos</button>
+        </div>
+        <div class="reiniciarContent">
+            <button id="reiniciarPuntaje">Reiniciar Puntaje</button>
+            <div id="score">🏅Puntaje: ${puntaje}</div>
+        </div>
+    `;
+    document.getElementById('reiniciarPuntaje').addEventListener('click', () => {
+        reiniciarPuntaje();
+    });
 
-
-    if (respuestaUsuario === null) {
-        let confirmarSalir = confirm("😭¿Deseas salir del juego?😭");
-        if (confirmarSalir) {
-            return false;
-        } else {
-            return mostrarPregunta(pregunta);
+    document.getElementById('button-pinipedos').addEventListener('click', () => {
+        if ('pinipedos' in tematicas) {
+            iniciarTrivia('pinipedos');
         }
-    } else if (respuestaUsuario === "") {
-        let confirmarSalir = confirm("¿😭Deseas salir del juego😭?");
-        if (confirmarSalir) {
-            return false;
-        } else {
-            return mostrarPregunta(pregunta);
+    });
+
+    document.getElementById('button-cetaceos').addEventListener('click', () => {
+        if ('cetaceos' in tematicas) {
+            iniciarTrivia('cetaceos');
         }
+    });
+};
+
+
+const reiniciarPuntaje = () => {
+    puntaje = 0; // Reinicio puntaje a cero
+    guardarPuntaje(); // Guardo puntaje actualizado en localStorage
+    actualizarPuntajeEnUI(); // Actualizo puntaje 
+};
+
+
+const actualizarPuntajeEnUI = () => {
+    const scoreElement = document.getElementById('score');
+    scoreElement.textContent = `🏅Puntaje: ${puntaje}`;
+};
+
+
+const iniciarTrivia = (tematica) => {
+    tematicaActual = tematicas[tematica];
+    IndicePreguntaActual = 0;
+    cargarPuntaje();
+    cargarPregunta();
+};
+
+
+const cargarPregunta = () => {
+    preguntaRespondida = false;
+    const pregunta = tematicaActual[IndicePreguntaActual];
+
+    app.innerHTML = `
+    <h2>${pregunta.titulo}</h2>
+    <div class="question">${pregunta.pregunta}</div>
+    <div class="answers"></div>
+    <div id="score">🏅Puntaje:${puntaje}</div>
+    <div id="message" class="message hidden">
+        ❌Respuesta incorrecta.
+        Restaste 10 puntos.
+        
+    </div>
+    <button id="continuar" class="hidden">Continuar</button>
+`;
+
+    const answersContainer = document.querySelector('.answers'); // Creo botones con las opciones de respuesta
+    pregunta.opciones.forEach((opcion, index) => { 
+        const button = document.createElement('button');
+        button.innerText = opcion;
+        button.addEventListener('click', () => manejarRespuesta(index));
+        answersContainer.innerHTML += button.outerHTML;
+    });
+
+    const continuarButton = document.getElementById('continuar');
+    continuarButton.addEventListener('click', () => {
+        IndicePreguntaActual++;
+        if (IndicePreguntaActual < tematicaActual.length) {
+            cargarPregunta();
+        } else {
+            mostrarResultados();
+        }
+        guardarPuntaje();
+    });
+
+    continuarButton.classList.add('continue-button');
+    continuarButton.classList.add('hidden');
+};
+
+
+let preguntaRespondida = false;
+
+const manejarRespuesta = (index) => {
+    if (preguntaRespondida) {
+        return; // Salgo de la funcion si ya conteste
     }
 
-    let respuestaNumerica = parseInt(respuestaUsuario);
+    const pregunta = tematicaActual[IndicePreguntaActual];
+    const message = document.getElementById('message');
+    const continuarButton = document.getElementById('continuar');
+    const buttons = document.querySelectorAll('.answers button');
+    buttons[index].classList.add('selected');
 
-    if (isNaN(respuestaNumerica) || respuestaNumerica < 1 || respuestaNumerica > pregunta.opciones.length) {
-        alert("⚠️ Por favor, ingresa una opción válida");
-        return mostrarPregunta(pregunta);
-    }
+    buttons.forEach(button => {
+        button.disabled = true; // disable para deshabilitar los botones cuando ya conteste
+    });
 
-    let respuestaCorrecta = pregunta.respuestaCorrecta;
-
-    if (respuestaNumerica === respuestaCorrecta) {
-        puntaje += 10
-        alert("✅¡Respuesta correcta! \nSumaste 10 puntos.\n 🏅Tu puntaje actual es " + puntaje);
-
+    if (index === pregunta.respuestaCorrecta) {
+        puntaje += 10;
+        message.innerText = `✅¡Respuesta correcta!\n  Sumaste 10 puntos.\n`;
+        message.classList.remove('hidden');
+        message.classList.remove('error');
     } else {
         puntaje -= 10;
-        alert("❌Respuesta incorrecta. \nRestaste 10 puntos\n🏅Tu puntaje actual es " + puntaje);
-
+        message.innerText = `❌Respuesta incorrecta.\n Restaste 10 puntos.\n`;
+        message.classList.remove('hidden');
+        message.classList.add('error');
     }
-    return true;
-}
+
+    continuarButton.classList.remove('hidden');
 
 
-function elegirTematica() {
-    let tema = prompt("/////////🐬🦭🐳 TRIVIA DE MAMÍFEROS MARINOS 🐳🦭🐬/////////\nElige una temática:\n- INGRESA P para 🦭Pinípedos\n- INGRESA C para 🐬Cetáceos").toLowerCase();
-    if (tema === "p") {
-        jugar(preguntasPinipedos);
-    } else if (tema === "c") {
-        jugar(preguntasCetaceos);
-    } else {
-        alert("⚠️ Temática inválida. \nPor favor, elige 'P' para 🦭Pinípedos o 'C' 🐬para Cetáceos.");
-        elegirTematica();
+    preguntaRespondida = true; // Marco la pregunta como respondida
+};
+
+
+const mostrarResultados = () => {
+    app.innerHTML = `
+        <div class="result">
+            <h2>Fin del juego</h2>
+            <p>Tu puntuación es: ${puntaje}</p>
+            <button id="reiniciar">Reiniciar</button>
+        </div>
+    `;
+
+    document.getElementById('reiniciar').addEventListener('click', elegirTematica);
+    document.getElementById('reiniciar').classList.add('reiniciarTrivia');
+};
+
+
+const guardarPuntaje = () => {
+    localStorage.setItem('puntajeTrivia', JSON.stringify(puntaje));
+};
+
+
+const cargarPuntaje = () => {
+    const puntajeGuardado = localStorage.getItem('puntajeTrivia');
+    if (puntajeGuardado) {
+        puntaje = JSON.parse(puntajeGuardado);
     }
-}
+};
 
-
-function jugar(tematica) {
-    let seguirJugando = true;
-
-    while (seguirJugando) {
-        for (const pregunta of tematica) {
-            let respuesta = mostrarPregunta(pregunta);
-            if (!respuesta) {
-                seguirJugando = false;
-                break;
-            }
-        }
-
-        if (seguirJugando) {
-            seguirJugando = confirm("🏅Tu puntaje actual es: " + puntaje + "\n😇¿Quieres seguir jugando?😇");
-        }
-
-        if (seguirJugando) {
-            elegirTematica();
-        }
-
-
-        if (seguirJugando == null) {
-            break;
-        }
-    }
-}
-
+cargarPuntaje();
 elegirTematica();
-
-
-

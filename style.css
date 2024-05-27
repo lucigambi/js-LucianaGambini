@@ -1,0 +1,166 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+#app {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    border: 2px solid #007BFF;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+
+}
+
+.question {
+    font-size: 18px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.answers {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.answers button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.answers button:hover {
+    background-color: #0056b3;
+}
+
+.hidden {
+    display: none;
+}
+
+.result {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+#score {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+#tematica-select {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+}
+
+#tematica-select button {
+    font-size: 18px;
+    padding: 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #007BFF;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+#tematica-select button:hover {
+    background-color: #0056b3;
+}
+
+.message {
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    font-size: 18px;
+    margin: 20px 0;
+    color: green;
+}
+
+.message.error {
+    color: red;
+}
+
+.continue-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #28a745;
+    color: white;
+}
+
+.continue-button:hover {
+    background-color: #218838;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    pointer-events: none;
+}
+
+button:disabled:hover {
+    background-color: #cccccc;
+}
+
+button.selected {
+    background-color: #007bff;
+    color: #ffffff;
+}
+
+.reiniciarContent {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #ecf1ed;
+    color: rgb(104, 99, 99);
+    margin-top: 10px;
+}
+
+#reiniciarPuntaje {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #28a745;
+    color: white;
+    margin-top: 10px;
+}
+
+#reiniciarPuntaje:hover {
+    background-color: #218838;
+}
+
+.reiniciarTrivia {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #28a745;
+    color: white;
+    margin-top: 10px;
+}
+
+.reiniciarTrivia:hover {
+    background-color: #218838;
+}
