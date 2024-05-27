@@ -88,7 +88,7 @@ const elegirTematica = () => {
 const reiniciarPuntaje = () => {
     puntaje = 0; // Reinicio puntaje a cero
     guardarPuntaje(); // Guardo puntaje actualizado en localStorage
-    actualizarPuntajeEnUI(); // Actualizo puntaje 
+    actualizarPuntajeEnUI(); // Actualizo puntaje en interfaz
 };
 
 
@@ -123,12 +123,12 @@ const cargarPregunta = () => {
     <button id="continuar" class="hidden">Continuar</button>
 `;
 
-    const answersContainer = document.querySelector('.answers'); // Creo botones con las opciones de respuesta
-    pregunta.opciones.forEach((opcion, index) => { 
+    const answersContainer = document.querySelector('.answers'); // Para cada Opcion agrego un boton appendChild(button)
+    pregunta.opciones.forEach((opcion, index) => {
         const button = document.createElement('button');
         button.innerText = opcion;
         button.addEventListener('click', () => manejarRespuesta(index));
-        answersContainer.innerHTML += button.outerHTML;
+        answersContainer.appendChild(button);
     });
 
     const continuarButton = document.getElementById('continuar');
