@@ -179,6 +179,18 @@ const guardarPregunta = async (event) => {
         await crearPregunta(nuevaPregunta);
     }
 
+    Swal.fire({
+        icon: 'success',
+        title: 'Pregunta Creada',
+        text: '¡La pregunta se ha creado exitosamente!',
+        timer: 2500,
+        customClass: {
+            popup: 'my-swal-popup',
+            title: 'my-swal-title',
+            content: 'my-swal-content'
+        }
+    });
+
     console.log(`Guardando pregunta en la temática ${tematica}:`, nuevaPregunta);
     mostrarFormularioCreador();
 };
@@ -258,7 +270,7 @@ const eliminarPregunta = async (id) => {
                 content: 'my-swal-content'
             }
         });
-
+    
 
         if (result.isConfirmed) {
 
@@ -274,6 +286,7 @@ const eliminarPregunta = async (id) => {
             icon: 'error',
             title: 'Error',
             text: 'Ha ocurrido un error al intentar eliminar la pregunta. Por favor, intenta nuevamente.',
+            timer: 3000,
             customClass: {
                 popup: 'my-swal-popup',
                 title: 'my-swal-title',
